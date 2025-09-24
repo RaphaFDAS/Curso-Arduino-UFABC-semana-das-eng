@@ -1,0 +1,2 @@
+Este projeto foi realizado durante o curso introdutorio de arduino realizado na semana das engenharias de 2025 da UFABC, o intuito foi familiarizar o participante com hardware e software apartir do arduino.
+O seguinte codigo presente nesse diretorio foi feito durante o curso sendo um sensor de proximidade em que os led's piscam de acordo com a proximidade do objeto, para isso foi usado um sensor ultra sônico, resistores, LED's e um arduino UNO.
