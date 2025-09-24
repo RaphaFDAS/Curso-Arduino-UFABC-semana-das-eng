@@ -1,0 +1,69 @@
+#include <Ultrasonic.h>
+
+//#include "UltrasonicUltrasonic.h" // Inclusão da biblioteca necessária
+
+const int echoPin = 4; // Pino digital utilizado pelo echo (recebe)
+const int trigPin = 2; // Pino digital utilizado pelo trig (envia)
+
+Ultrasonic ultrasonic(trigPin, echoPin); // Inicializando os pinos do Arduino
+
+int distancia; // Variável inteira
+String result; // Variável string
+
+void setup() {
+  pinMode(echoPin, INPUT); // Define o echoPin como entrada
+  pinMode(trigPin, OUTPUT); // Define o trigPin como saída
+  pinMode(13, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(10, OUTPUT); //buzzer
+  Serial.begin(9600); // Inicia a transmissão para monitor serial
+  Serial.println("Distancia");
+}
+
+void loop() {
+  hcsr04(); // Faz a chamada do método "hcsr04()"
+  
+  // Imprime a distância no monitor serial
+  Serial.print(result);
+  Serial.println("cm");
+
+
+//LED
+  digitalWrite(13,0);
+  digitalWrite(12,0);
+  digitalWrite(8,0);
+  digitalWrite(7,0);
+//BUZZER
+  digitalWrite(10,0);
+
+  if(distancia <= 20){
+    digitalWrite(13, HIGH); // Liga o LED
+  }
+  if(distancia <= 15){
+    digitalWrite(12, HIGH); // Liga o LED
+  }
+  if(distancia <= 10){
+    digitalWrite(8, HIGH); // Liga o LED
+  }
+  if(distancia <= 5){
+    digitalWrite(7, HIGH); // Liga o LED
+    digitalWrite(10, HIGH);
+  }
+}
+
+// Método responsável por calcular a distância
+void hcsr04() {
+  digitalWrite(trigPin, LOW); // Seta o pino 12 com um pulso baixo "low"
+  delayMicroseconds(2); // Intervalo de 2 microssegundos
+  digitalWrite(trigPin, HIGH); // Seta o pino 12 com pulso alto "high"
+  delayMicroseconds(10); // Intervalo de 10 microssegundos
+  digitalWrite(trigPin, LOW); // Seta o pino 12 com pulso baixo "low" novamente
+  
+  // Função read() para obter a distância
+  distancia = ultrasonic.read(); // A função read() retorna a distância em centímetros
+
+  result = String(distancia); // Variável result recebe a distância convertida de inteiro para string
+  delay(100); // Intervalo de 500 milissegundos
+}
